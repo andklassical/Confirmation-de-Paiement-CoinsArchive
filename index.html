@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Confirmation de Paiement - CoinsArchive</title>
+<style>
+  html, body { margin:0; padding:0; height:100%; font-family:Arial,sans-serif; background:#f9f9f9; color:#333; }
+  body { display:flex; flex-direction:column; align-items:center; }
+  .container { width:100%; max-width:500px; background:#fff; padding:20px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.1); text-align:center; margin-top:20px; z-index:10; }
+  h2 { color:#222; }
+  .wallet-box { background:#f0f0f0; padding:10px; border-radius:8px; margin-bottom:10px; font-weight:bold; font-size:16px; word-break:break-all; }
+  button.copy-btn { margin-top:10px; padding:10px 15px; background:#007BFF; border:none; border-radius:8px; color:#fff; cursor:pointer; }
+  button.copy-btn:hover { background:#0056b3; }
+  input,label { display:block; margin:10px auto; width:100%; max-width:400px; padding:8px; border:1px solid #ccc; border-radius:6px; }
+  .membership-code-box { display:none; padding:20px; background:#e9f9ee; border:3px dashed #28a745; border-radius:12px; box-shadow:0 0 12px rgba(40,167,69,0.5); text-align:center; margin-bottom:10px; }
+  .membership-code { font-size:28px; font-weight:bold; color:#28a745; text-shadow:0 0 8px rgba(40,167,69,0.7); margin:10px 0; }
+  .iframe-container { width:100%; flex:1; display:none; margin-top:10px; }
+  .iframe-container iframe { width:100%; height:100vh; border:none; }
+</style>
+</head>
+<body>
+
+<div class="container" id="mainContainer">
+  <h2>Confirmation de Paiement</h2>
+  <p>Veuillez envoyer <strong>203 $ en BTC</strong> à l’adresse ci-dessous :</p>
+
+  <div class="wallet-box" id="walletAddress">bc1qzkd2k6ydt3hm9zjz8znmsdclcvyuhp4v59lfj8</div>
+  <button class="copy-btn" onclick="copyWallet()">Copier l’adresse</button>
+
+  <h3>Soumettre votre preuve de paiement</h3>
+  <form id="paymentForm">
+    <label for="txid">ID de Transaction :</label>
+    <input type="text" id="txid" placeholder="Entrez l'ID de transaction">
+
+    <label for="fileUpload">Ou téléversez un fichier (preuve) :</label>
+    <input type="file" id="fileUpload">
+
+    <button type="submit" class="copy-btn">Confirmer le Paiement</button>
+  </form>
+
+  <div class="membership-code-box" id="membershipCodeBox">
+    ✅ Votre code d’adhésion unique est : 
+    <div class="membership-code" id="membershipCode">13598</div>
+    <button class="copy-btn" onclick="copyCode()">Copier le Code</button>
+    <br>
+    <p>Après avoir copié le code, remplissez votre inscription ci-dessous :</p>
+  </div>
+</div>
+
+<div class="iframe-container" id="iframeContainer">
+  <iframe src="https://coinsarchive.net/register"></iframe>
+</div>
+
+<script>
+function copyWallet() {
+  var wallet = document.getElementById("walletAddress").innerText;
+  navigator.clipboard.writeText(wallet);
+  alert("Adresse copiée : " + wallet);
+}
+
+function copyCode() {
+  var code = document.getElementById("membershipCode").innerText;
+  navigator.clipboard.writeText(code);
+  alert("Code d’adhésion copié : " + code);
+}
+
+document.getElementById("paymentForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  document.getElementById("membershipCodeBox").style.display = "block";
+  document.getElementById("iframeContainer").style.display = "block";
+  document.getElementById("iframeContainer").scrollIntoView({behavior:"smooth"});
+});
+</script>
+
+</body>
+</html>
